@@ -1,0 +1,32 @@
+:root {
+  /* Base colors */
+  --color-primary: #1c1c1c;
+  --color-primary-hover: #292929;
+  --color-primary-text: #ecf0f1;
+  --color-accent: #e67e22;
+  --color-danger: #e74c3c;
+  --color-warning: #f1c40f;
+  --color-info: #1abc9c;
+  --color-nav: #1c1c1c;
+  --color-nav-hover: #292929;
+  --color-nav-text: #ecf0f1;
+
+  /* Neutral colors */
+  --color-light: #ecf0f1;
+  --color-dark: #2c3e50;
+  --color-background: #ffffff;
+  --color-text: #000000;
+
+  /* Screens */
+  --screen-lg: 1280px;
+
+  /* Shades */
+  --color-border: #dcdcdc;
+}
+
+html {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-size: 1.2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
