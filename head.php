@@ -11,7 +11,7 @@
   }
 
   main {
-    max-width: var(--screen-lg);
+    min-width: var(--screen-lg);
     margin-inline: auto;
     padding: 16px;
   }
