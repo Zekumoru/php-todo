@@ -1,8 +1,10 @@
 <?php
-// Figure out the current page’s filename
 $currentPage = basename($_SERVER['SCRIPT_NAME']);
-// Decide which link to show
-if ($currentPage === 'sign-up.php') {
+
+if (isset($_COOKIE["credentials"])) {
+  $linkHref = '/logout.php';
+  $linkText = 'Log out';
+} elseif ($currentPage === 'sign-up.php') {
   $linkHref = '/index.php';
   $linkText = 'Login';
 } else {

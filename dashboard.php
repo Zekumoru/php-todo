@@ -1,3 +1,5 @@
+<?php require "auth/auth.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

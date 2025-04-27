@@ -1,3 +1,5 @@
+<?php require "auth/auth.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,6 +55,9 @@
       }
 
       if (!isset($err)) {
+        unset($user["password"]);
+        // expire credentials cookie in 1 week
+        setcookie("credentials", json_encode($user), time() + 86400 * 7, "/");
         header("Location: /dashboard.php");
         exit;
       }
