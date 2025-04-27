@@ -40,9 +40,9 @@ error_reporting(E_ALL);
     $password = "";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $filePath = __DIR__ . "/data/users.json";
+      $usersPath = __DIR__ . "/data/users.json";
 
-      $users = json_decode(file_get_contents($filePath), true) ?: [];
+      $users = json_decode(file_get_contents($usersPath), true) ?: [];
 
       $name = sanitize($_POST["name"]);
       if (empty($name)) {
@@ -77,7 +77,7 @@ error_reporting(E_ALL);
       if (!isset($nameErr) && !isset($emailErr) && !isset($passwordErr)) {
         $user = new User(strtolower($name), strtolower($email), $password);
         $users[] = $user->to_array();
-        file_put_contents($filePath, json_encode($users, JSON_PRETTY_PRINT));
+        file_put_contents($usersPath, json_encode($users, JSON_PRETTY_PRINT));
 
         header("Location: /index.php");
         exit;
