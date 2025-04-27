@@ -1,3 +1,16 @@
+<?php
+// Figure out the current page’s filename
+$currentPage = basename($_SERVER['SCRIPT_NAME']);
+// Decide which link to show
+if ($currentPage === 'sign-up.php') {
+  $linkHref = '/index.php';
+  $linkText = 'Login';
+} else {
+  $linkHref = '/sign-up.php';
+  $linkText = 'Sign up';
+}
+?>
+
 <style>
   .main-nav {
     background-color: var(--color-nav);
@@ -19,13 +32,16 @@
     margin-left: auto;
   }
 
-  .main-nav .nav-links-item {
+  .main-nav .nav-links-item a {
+    display: inline-block;
     transition: background-color 0.3s;
     padding: 18px 32px;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
   }
 
-  .main-nav .nav-links-item:hover {
+  .main-nav .nav-links-item a:hover {
     background-color: var(--color-nav-hover);
   }
 </style>
@@ -35,7 +51,7 @@
     <div class="title">PHP Todo</div>
 
     <ul class="nav-links">
-      <li class="nav-links-item">Sign up</li>
+      <li class="nav-links-item"><a href="<?= $linkHref ?>"><?= $linkText ?></a></li>
     </ul>
   </div>
 </nav>

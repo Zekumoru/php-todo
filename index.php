@@ -2,26 +2,13 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles/reset.css">
-  <link rel="stylesheet" href="styles/main.css">
-  <link rel="stylesheet" href="styles/components.css">
+  <?php include "head.php"; ?>
   <title>PHP Todo</title>
   <style>
-    #app {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
     main {
       display: grid;
       place-content: center;
       flex-grow: 1;
-      max-width: var(--screen-lg);
-      margin-inline: auto;
-      padding: 16px;
     }
 
     .login-form {
@@ -45,7 +32,7 @@
 
         <div class="form-control">
           <label for="password">Password</label>
-          <input class="input" type="password" name="password" id="password">
+          <input class="input" type="password" name="password" id="password" />
         </div>
 
         <button class="btn btn-primary">Login</button>
