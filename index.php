@@ -9,18 +9,7 @@
   <style>
     main {
       display: grid;
-      place-content: center;
-      flex-grow: 1;
-    }
-
-    .login-form {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .error {
-      color: var(--color-danger);
+      align-items: center;
     }
   </style>
 </head>
@@ -65,7 +54,7 @@
     ?>
 
     <main>
-      <form class="login-form" method="post" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+      <form class="form-container" method="post" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
         <div class="form-control">
           <label for="email">Email</label>
           <input class="input" type="email" name="email" id="email" value="<?= $email ?>" />

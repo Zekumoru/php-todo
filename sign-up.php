@@ -9,18 +9,7 @@
   <style>
     main {
       display: grid;
-      place-content: center;
-      flex-grow: 1;
-    }
-
-    .signup-form {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .error {
-      color: var(--color-danger);
+      align-items: center;
     }
   </style>
 </head>
@@ -84,7 +73,7 @@
     ?>
 
     <main>
-      <form class="signup-form" method="post" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+      <form class="form-container" method="post" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
         <div class="form-control">
           <label for="name">Name</label>
           <input class="input" type="text" name="name" id="name" value="<?= $name ?>" />

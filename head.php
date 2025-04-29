@@ -14,6 +14,7 @@
     min-width: var(--screen-lg);
     margin-inline: auto;
     padding: 16px;
+    flex-grow: 1;
   }
 
   @media screen and (max-width: 1280px) {
