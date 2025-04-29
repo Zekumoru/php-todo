@@ -11,16 +11,11 @@
   }
 
   main {
-    min-width: var(--screen-lg);
+    width: 100%;
+    max-width: var(--screen-lg);
+    box-sizing: border-box;
     margin-inline: auto;
     padding: 16px;
     flex-grow: 1;
-  }
-
-  @media screen and (max-width: 1280px) {
-    main {
-      min-width: 0;
-      margin-inline: initial;
-    }
   }
 </style>
