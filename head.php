@@ -15,4 +15,11 @@
     margin-inline: auto;
     padding: 16px;
   }
+
+  @media screen and (max-width: 1280px) {
+    main {
+      min-width: 0;
+      margin-inline: initial;
+    }
+  }
 </style>
