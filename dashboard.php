@@ -18,8 +18,14 @@
   <div id="app">
     <?php include "components/nav.php"; ?>
 
+    <?php
+    require "models/User.php";
+
+    $user = User::fromJSON($_COOKIE["credentials"]);
+    ?>
+
     <main>
-      <div class="wrapper">Welcome!</div>
+      <div class="wrapper">Welcome, <span class="capitalize"><?= $user->name ?></span>!</div>
     </main>
   </div>
 </body>

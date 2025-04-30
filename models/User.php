@@ -14,6 +14,12 @@ class User implements Arrayable
     $this->password = $password;
   }
 
+  public static function fromJSON($json)
+  {
+    $user = json_decode($json, true);
+    return new User($user["name"], $user["email"], $user["password"]);
+  }
+
   public function to_array()
   {
     return [
