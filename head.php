@@ -14,7 +14,6 @@
   }
 
   main {
-    width: 100%;
     max-width: var(--screen-lg);
     box-sizing: border-box;
     margin-inline: auto;

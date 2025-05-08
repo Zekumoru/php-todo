@@ -8,8 +8,14 @@
   <title>PHP Todo</title>
   <style>
     main {
-      display: grid;
+      display: flex;
       align-items: center;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .form-container {
+      flex-grow: 1;
     }
   </style>
 </head>
