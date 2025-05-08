@@ -1,17 +1,21 @@
 <?php
-include "interfaces/Arrayable.php";
 
-class User implements Arrayable
+class User
 {
-  public $name;
-  public $email;
-  public $password;
+  public function __construct(
+    public string $name,
+    public string $email,
+    public string $password
+  ) {
+  }
 
-  public function __construct($name, $email, $password)
+  public static function fromDTO(CreateUserDTO $dto): self
   {
-    $this->name = $name;
-    $this->email = $email;
-    $this->password = $password;
+    return new self(
+      $dto->name,
+      $dto->email,
+      $dto->password,
+    );
   }
 
   public static function fromJSON($json)
@@ -19,13 +23,30 @@ class User implements Arrayable
     $user = json_decode($json, true);
     return new User($user["name"], $user["email"], $user["password"]);
   }
+}
 
-  public function to_array()
+class CreateUserDTO
+{
+  public string $name;
+  public string $email;
+  public string $password;
+
+  public function __construct(array $data)
   {
-    return [
-      'name' => $this->name,
-      'email' => $this->email,
-      'password' => $this->password,
-    ];
+    $this->name = ucwords(trim($data['name']));
+    $this->email = strtolower(trim($data['email']));
+    $this->password = $data['password'];
+  }
+}
+
+class LogInUserDTO
+{
+  public string $email;
+  public string $password;
+
+  public function __construct(array $data)
+  {
+    $this->email = strtolower(trim($data['email']));
+    $this->password = $data['password'];
   }
 }
