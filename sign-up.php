@@ -19,40 +19,38 @@
     <?php include "components/nav.php"; ?>
 
     <?php
-    require "utils/sanitize.php";
-    require "models/User.php";
+    require_once "utils/sanitize.php";
+    require_once "models/User.php";
+    require_once "repositories/UserRepository.php";
 
-    $name = "";
-    $email = "";
-    $password = "";
+    $name = '';
+    $email = '';
+    $password = '';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $usersPath = __DIR__ . "/data/users.json";
+      $userRepository = new UserRepository($conn);
+      $userDto = new CreateUserDTO($_POST);
+      $name = $userDto->name;
+      $email = $userDto->email;
+      $password = $userDto->password;
 
-      $users = json_decode(file_get_contents($usersPath), true) ?: [];
-
-      $name = sanitize($_POST["name"]);
       if (empty($name)) {
         $nameErr = "Name is required";
       } elseif (!preg_match("/^[a-zA-Z-]*$/", $name)) {
         $nameErr = "Only letters and dashes allowed";
       }
 
-      $email = sanitize($_POST["email"]);
       if (empty($email)) {
         $emailErr = "Email is required";
       } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $emailErr = "Invalid email";
       } else {
-        foreach ($users as $user) {
-          if (isset($user["email"]) && $user["email"] === strtolower($email)) {
-            $emailErr = "Email already registered";
-            break;
-          }
+        $user = $userRepository->findByEmail($email);
+        if ($user) {
+          $emailErr = "Email already registered";
         }
       }
 
-      $password = sanitize($_POST["password"]);
       if (empty($password)) {
         $passwordErr = "Password is required";
       } elseif (strlen($password) < 8) {
@@ -62,10 +60,7 @@
       }
 
       if (!isset($nameErr) && !isset($emailErr) && !isset($passwordErr)) {
-        $user = new User(strtolower($name), strtolower($email), $password);
-        $users[] = $user->to_array();
-        file_put_contents($usersPath, json_encode($users, JSON_PRETTY_PRINT));
-
+        $userRepository->insertOne($userDto);
         header("Location: /index.php");
         exit;
       }

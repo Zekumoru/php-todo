@@ -19,32 +19,30 @@
     <?php include "components/nav.php"; ?>
 
     <?php
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    require_once "models/User.php";
+    require_once "repositories/UserRepository.php";
+
+    $email = '';
+    $password = '';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $usersPath = __DIR__ . "/data/users.json";
+      $userRepository = new UserRepository($conn);
+      $userDto = new LogInUserDTO($_POST);
+      $email = $userDto->email;
+      $password = $userDto->password;
 
-      $users = json_decode(file_get_contents($usersPath), true) ?: [];
-
-      $user = null;
-      foreach ($users as $u) {
-        if (isset($u['email']) && strtolower($u['email']) === strtolower($email)) {
-          $user = $u;
-          break;
-        }
-      }
+      $user = $userRepository->findByEmail($email);
 
       if ($user === null) {
         $err = "Invalid credentials";
       }
 
-      if (isset($user["password"]) && $user["password"] !== $password) {
+      if ($user && $user->password !== $password) {
         $err = "Invalid credentials";
       }
 
       if (!isset($err)) {
-        unset($user["password"]);
+        $cookieUser = ["name" => $user->name, "email" => $user->email];
         // expire credentials cookie in 1 week
         setcookie("credentials", json_encode($user), time() + 86400 * 7, "/");
         header("Location: /dashboard.php");
