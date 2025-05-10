@@ -24,7 +24,7 @@ class TodoRepository
    */
   public function findAllByUserId(int $id): array
   {
-    $stmt = $this->conn->prepare("SELECT * FROM todos WHERE user_id = ? ORDER BY text ASC");
+    $stmt = $this->conn->prepare("SELECT * FROM todos WHERE user_id = ? ORDER BY checked ASC, text ASC");
     $stmt->execute([$id]);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return array_map(fn($row) => Todo::fromArray($row), $rows);
