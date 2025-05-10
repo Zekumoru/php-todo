@@ -61,11 +61,10 @@
         $passwordErr = "Password is required";
       } elseif (strlen($password) < 8) {
         $passwordErr = "Password must be at least 8 characters";
-      } elseif (!preg_match("/^[a-zA-Z0-9-]*$/", $password)) {
-        $passwordErr = "Only letters, numbers and dashes allowed";
       }
 
       if (!isset($nameErr) && !isset($emailErr) && !isset($passwordErr)) {
+        $userDto->hashPassword();
         $userRepository->insertOne($userDto);
         header("Location: /index.php");
         exit;

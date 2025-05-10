@@ -37,6 +37,11 @@ class CreateUserDTO
     $this->email = strtolower(trim($data['email']));
     $this->password = $data['password'];
   }
+
+  public function hashPassword(): void
+  {
+    $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+  }
 }
 
 class LogInUserDTO
@@ -48,5 +53,10 @@ class LogInUserDTO
   {
     $this->email = strtolower(trim($data['email']));
     $this->password = $data['password'];
+  }
+
+  public function verify(string $hashedPassword): bool
+  {
+    return password_verify($this->password, $hashedPassword);
   }
 }

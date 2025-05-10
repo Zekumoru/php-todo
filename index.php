@@ -43,7 +43,7 @@
         $err = "Invalid credentials";
       }
 
-      if ($user && $user->password !== $password) {
+      if ($user && !$userDto->verify($user->password)) {
         $err = "Invalid credentials";
       }
 
