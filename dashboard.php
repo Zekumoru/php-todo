@@ -76,7 +76,7 @@
     <main>
       <div class="wrapper text-xl">Welcome, <span class="capitalize"><?= $user->name ?></span>!</div>
 
-      <form method="post" action="/actions/add_todo.php">
+      <form method="post" action="/actions/add_todo.php" onsubmit="handleAddTodo(event)">
         <div class="form-control">
           <input class="input" name="input" type="text" placeholder="What are you up to today?" />
           <button class="btn btn-primary btn-add text-xl">+</button>
@@ -121,6 +121,11 @@
   </div>
 
   <script>
+    function handleAddTodo(event) {
+      const inputEl = event.target.querySelector('input');
+      if (!inputEl.value.trim()) event.preventDefault();
+    }
+
     function enterEditMode(button) {
       const todoEl = button.closest('li.todo');
 
