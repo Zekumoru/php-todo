@@ -28,6 +28,8 @@
 
     .todos-container {
       flex-grow: 1;
+      overflow-y: auto;
+      height: 0;
     }
 
     .todos {
