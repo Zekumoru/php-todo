@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="styles/main.css">
 <link rel="stylesheet" href="styles/utilities.css">
 <link rel="stylesheet" href="styles/components.css">
+<script src="https://kit.fontawesome.com/3b64ecc972.js" crossorigin="anonymous" defer></script>
 <style>
   #app {
     display: flex;
