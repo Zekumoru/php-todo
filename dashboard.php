@@ -18,7 +18,11 @@
       flex-direction: row;
     }
 
-    .add-button {
+    .btn {
+      width: 48px;
+    }
+
+    .btn-add {
       line-height: 1rem !important;
     }
 
@@ -39,8 +43,17 @@
       gap: 8px;
     }
 
-    .todo span {
+    .todo-text {
       flex-grow: 1;
+    }
+
+    .update-container {
+      display: flex;
+      gap: 8px;
+    }
+
+    .todo-input {
+      margin-inline-start: -8px;
     }
 
     .no-todos-label {
@@ -66,7 +79,7 @@
       <form method="post" action="/actions/add_todo.php">
         <div class="form-control">
           <input class="input" name="input" type="text" placeholder="What are you up to today?" />
-          <button class="btn btn-primary add-button text-xl">+</button>
+          <button class="btn btn-primary btn-add text-xl">+</button>
         </div>
       </form>
 
@@ -84,11 +97,20 @@
                     <span class="checkmark"></span>
                   </label>
                 </form>
-                <span><?= $todo->text ?></span>
-                <button class="btn fa-solid fa-edit"></button>
-                <form method="post" action="/actions/delete_todo.php">
+                <span class="todo-text"><?= $todo->text ?></span>
+                <form class="update-container" method="post" action="/actions/update_todo.php">
                   <input type="hidden" name="todo_id" value="<?= $todo->id ?>">
-                  <button class="btn fa-solid fa-trash" onclick="this.form.submit()"></button>
+                  <input type="text" class="input todo-input" name="todo_input" value="<?= $todo->text ?>"
+                    style="display: none;" />
+                  <button type="button" class="btn btn-edit fa-solid fa-edit" onclick="enterEditMode(this)"></button>
+                  <button type="button" class="btn btn-cancel fa-solid fa-x" onclick="cancelEdit(this)"
+                    style="display: none;"></button>
+                  <button type="submit" class="btn btn-submit fa-solid fa-check" style="display: none;"></button>
+                </form>
+                </form>
+                <form class="delete-container" method="post" action="/actions/delete_todo.php">
+                  <input type="hidden" name="todo_id" value="<?= $todo->id ?>">
+                  <button class="btn fa-solid fa-trash"></button>
                 </form>
               </li>
             <?php endforeach; ?>
@@ -97,6 +119,60 @@
       </div>
     </main>
   </div>
+
+  <script>
+    function enterEditMode(button) {
+      const todoEl = button.closest('li.todo');
+
+      const textEl = todoEl.querySelector('.todo-text');
+      const inputEl = todoEl.querySelector('.todo-input');
+      const checkboxEl = todoEl.querySelector('input[type="checkbox"]');
+
+      textEl.style.display = "none";
+      inputEl.style.display = "inline-block";
+      checkboxEl.disabled = true;
+
+      const editBtn = todoEl.querySelector('.btn-edit');
+      const cancelBtn = todoEl.querySelector('.btn-cancel');
+      const submitBtn = todoEl.querySelector('.btn-submit');
+
+      const updateContainer = todoEl.querySelector('.update-container');
+      const deleteContainer = todoEl.querySelector('.delete-container');
+
+      editBtn.style.display = "none";
+      cancelBtn.style.display = "inline-block";
+      submitBtn.style.display = "inline-block";
+      deleteContainer.style.display = "none";
+      updateContainer.style.flexGrow = '1';
+    }
+
+    function cancelEdit(button) {
+      const todoEl = button.closest('li.todo');
+
+      const textEl = todoEl.querySelector('.todo-text');
+      const inputEl = todoEl.querySelector('.todo-input');
+      const checkboxEl = todoEl.querySelector('input[type="checkbox"]');
+
+      textEl.style.display = "inline-block";
+      inputEl.style.display = "none";
+      checkboxEl.disabled = false;
+
+      const editBtn = todoEl.querySelector('.btn-edit');
+      const cancelBtn = todoEl.querySelector('.btn-cancel');
+      const submitBtn = todoEl.querySelector('.btn-submit');
+
+      const updateContainer = todoEl.querySelector('.update-container');
+      const deleteContainer = todoEl.querySelector('.delete-container');
+
+      editBtn.style.display = "inline-block";
+      cancelBtn.style.display = "none";
+      submitBtn.style.display = "none";
+      deleteContainer.style.display = "inline-block";
+      updateContainer.style.flexGrow = '0';
+
+      inputEl.value = textEl.textContent;
+    }
+  </script>
 </body>
 
 </html>

@@ -57,12 +57,21 @@
   background-color: #eee;
 }
 
-.checkbox:hover input ~ .checkmark {
+.checkbox input:disabled ~ .checkmark {
+  cursor: auto;
+  background-color: #ddd;
+}
+
+.checkbox:hover input:not(:disabled) ~ .checkmark {
   background-color: #ccc;
 }
 
 .checkbox input:checked ~ .checkmark {
-  background-color: #2196f3;
+  background-color: #2196f3 !important;
+}
+
+.checkbox input:checked:disabled ~ .checkmark {
+  background-color: #999 !important;
 }
 
 .checkmark:after {
