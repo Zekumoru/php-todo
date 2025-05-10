@@ -6,6 +6,25 @@ class User
     public int $id,
     public string $name,
     public string $email,
+  ) {
+  }
+
+  public static function fromArray(array $row): self
+  {
+    return new self(
+      (int) $row['id'],
+      $row['name'],
+      $row['email'],
+    );
+  }
+}
+
+class PasswordUser extends User
+{
+  public function __construct(
+    public int $id,
+    public string $name,
+    public string $email,
     public string $password
   ) {
   }
