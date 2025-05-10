@@ -88,7 +88,10 @@
           <ul class="todos">
             <?php foreach ($todos as $todo): ?>
               <li class="todo">
-                <i class="btn fa-solid fa-x"></i>
+                <label class="checkbox">
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
                 <span><?= $todo->text ?></span>
                 <i class="btn fa-solid fa-edit"></i>
                 <i class="btn fa-solid fa-trash"></i>
