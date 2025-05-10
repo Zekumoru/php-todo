@@ -36,6 +36,7 @@
       display: flex;
       align-items: center;
       height: 44px;
+      gap: 8px;
     }
 
     .todo span {
@@ -84,8 +85,11 @@
                   </label>
                 </form>
                 <span><?= $todo->text ?></span>
-                <i class="btn fa-solid fa-edit"></i>
-                <i class="btn fa-solid fa-trash"></i>
+                <button class="btn fa-solid fa-edit"></button>
+                <form method="post" action="/actions/delete_todo.php">
+                  <input type="hidden" name="todo_id" value="<?= $todo->id ?>">
+                  <button class="btn fa-solid fa-trash" onclick="this.form.submit()"></button>
+                </form>
               </li>
             <?php endforeach; ?>
           </ul>

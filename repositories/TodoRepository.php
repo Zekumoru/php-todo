@@ -41,4 +41,10 @@ class TodoRepository
     $stmt = $this->conn->prepare("UPDATE todos SET text = ?, checked = ? WHERE id = ?");
     return $stmt->execute([$todo->text, $todo->checked, $id]);
   }
+
+  public function deleteOne(int $id): bool
+  {
+    $stmt = $this->conn->prepare("DELETE FROM todos WHERE id = ?");
+    return $stmt->execute([$id]);
+  }
 }
