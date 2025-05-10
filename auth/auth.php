@@ -1,7 +1,7 @@
 <?php
-require_once "db/conn.php";
-require_once "repositories/UserRepository.php";
-require_once "repositories/CookieRepository.php";
+require_once __DIR__ . '/../db/conn.php';
+require_once __DIR__ . '/../repositories/UserRepository.php';
+require_once __DIR__ . '/../repositories/CookieRepository.php';
 
 $currentPage = basename($_SERVER['SCRIPT_NAME']);
 

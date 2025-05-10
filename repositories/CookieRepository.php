@@ -1,6 +1,6 @@
 <?php
 
-require_once 'models/Cookie.php';
+require_once __DIR__ . '/../models/Cookie.php';
 
 class CookieRepository
 {

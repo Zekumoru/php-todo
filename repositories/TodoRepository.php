@@ -1,6 +1,6 @@
 <?php
 
-require_once "models/Todo.php";
+require_once __DIR__ . '/../models/Todo.php';
 
 class TodoRepository
 {
