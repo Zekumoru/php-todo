@@ -22,7 +22,22 @@
       line-height: 1rem !important;
     }
 
+    .todos-container {
+      flex-grow: 1;
+    }
+
     .todos {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .todo {
+      display: flex;
+      align-items: center;
+    }
+
+    .todo span {
       flex-grow: 1;
     }
 
@@ -37,8 +52,22 @@
     <?php include "components/nav.php"; ?>
 
     <?php
+    require_once "repositories/TodoRepository.php";
+
+    $todoRepository = new TodoRepository($conn);
+    $todos = $todoRepository->findAllByUserId($user->id);
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $input = $_POST["input"];
+
+      $input = trim($_POST["input"]);
+      if (!empty($input)) {
+        $todo = new CreateTodoDTO($user->id, $input);
+        $todoRepository->insertOne($todo);
+
+        // Redirect to prevent form resubmission
+        header("Location: " . $_SERVER['REQUEST_URI']);
+        exit;
+      }
     }
     ?>
 
@@ -52,8 +81,21 @@
         </div>
       </form>
 
-      <div class="todos">
-        <p class="no-todos-label">No todos yet.</p>
+      <div class="todos-container">
+        <?php if (empty($todos)): ?>
+          <p class="no-todos-label">No todos yet.</p>
+        <?php else: ?>
+          <ul class="todos">
+            <?php foreach ($todos as $todo): ?>
+              <li class="todo">
+                <i class="btn fa-solid fa-x"></i>
+                <span><?= $todo->text ?></span>
+                <i class="btn fa-solid fa-edit"></i>
+                <i class="btn fa-solid fa-trash"></i>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+        <?php endif; ?>
       </div>
     </main>
   </div>
