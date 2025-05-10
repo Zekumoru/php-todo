@@ -35,6 +35,7 @@
     .todo {
       display: flex;
       align-items: center;
+      height: 44px;
     }
 
     .todo span {
@@ -75,10 +76,13 @@
           <ul class="todos">
             <?php foreach ($todos as $todo): ?>
               <li class="todo">
-                <label class="checkbox">
-                  <input type="checkbox">
-                  <span class="checkmark"></span>
-                </label>
+                <form method="post" action="/actions/toggle_todo.php">
+                  <input type="hidden" name="todo_id" value="<?= $todo->id ?>">
+                  <label class="checkbox">
+                    <input type="checkbox" name="checked" onchange="this.form.submit()" <?= $todo->checked ? 'checked' : '' ?>>
+                    <span class="checkmark"></span>
+                  </label>
+                </form>
                 <span><?= $todo->text ?></span>
                 <i class="btn fa-solid fa-edit"></i>
                 <i class="btn fa-solid fa-trash"></i>

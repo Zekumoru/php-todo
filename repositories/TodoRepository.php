@@ -8,6 +8,17 @@ class TodoRepository
   {
   }
 
+  public function findById(int $id): ?Todo
+  {
+    $stmt = $this->conn->prepare("SELECT * FROM todos WHERE id = ?");
+    $stmt->execute([$id]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$row) {
+      return null;
+    }
+    return Todo::fromArray($row);
+  }
+
   /**
    * @return Todo[]
    */
@@ -23,5 +34,11 @@ class TodoRepository
   {
     $stmt = $this->conn->prepare("INSERT INTO todos (user_id, text) VALUES (?, ?)");
     return $stmt->execute([$todo->user_id, $todo->text]);
+  }
+
+  public function updateOne(int $id, UpdateTodoDTO $todo): bool
+  {
+    $stmt = $this->conn->prepare("UPDATE todos SET text = ?, checked = ? WHERE id = ?");
+    return $stmt->execute([$todo->text, $todo->checked, $id]);
   }
 }

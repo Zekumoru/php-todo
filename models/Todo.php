@@ -36,3 +36,15 @@ class CreateTodoDTO
     $this->text = trim($text);
   }
 }
+
+class UpdateTodoDTO
+{
+  public string $text;
+  public string $checked;
+
+  public function __construct(string $text, bool $checked)
+  {
+    $this->text = trim($text);
+    $this->checked = (string) (int) $checked;
+  }
+}
