@@ -20,6 +20,16 @@ try {
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
   ");
+
+  $conn->exec("
+    CREATE TABLE IF NOT EXISTS cookies (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      user_id INT NOT NULL,
+      token VARCHAR(255) NOT NULL UNIQUE,
+      expiry TIMESTAMP NOT NULL,
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+  ");
 } catch (PDOException $e) {
   echo $e->getMessage();
 }

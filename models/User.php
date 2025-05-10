@@ -3,25 +3,21 @@
 class User
 {
   public function __construct(
+    public int $id,
     public string $name,
     public string $email,
     public string $password
   ) {
   }
 
-  public static function fromDTO(CreateUserDTO $dto): self
+  public static function fromArray(array $row): self
   {
     return new self(
-      $dto->name,
-      $dto->email,
-      $dto->password,
+      (int) $row['id'],
+      $row['name'],
+      $row['email'],
+      $row['password'],
     );
-  }
-
-  public static function fromJSON($json)
-  {
-    $user = json_decode($json, true);
-    return new User($user["name"], $user["email"], $user["password"]);
   }
 }
 

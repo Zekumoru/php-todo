@@ -1,4 +1,5 @@
 <?php require "auth/auth.php"; ?>
+<?php require "utils/error.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,6 +28,7 @@
     <?php
     require_once "models/User.php";
     require_once "repositories/UserRepository.php";
+    require_once "repositories/CookieRepository.php";
 
     $email = '';
     $password = '';
@@ -48,9 +50,17 @@
       }
 
       if (!isset($err)) {
-        $cookieUser = ["name" => $user->name, "email" => $user->email];
+        $cookieRepository = new CookieRepository($conn);
+
+        $cookieRaw = ["name" => $user->name, "email" => $user->email];
+        $expiry = new DateTime("+7 days");
+        $token = password_hash(json_encode($cookieRaw), PASSWORD_BCRYPT);
+
+        $cookieDto = new CreateCookieDTO($user->id, $token, $expiry);
+        $cookieRepository->insertOne($cookieDto);
+
         // expire credentials cookie in 1 week
-        setcookie("credentials", json_encode($user), time() + 86400 * 7, "/");
+        setcookie("credentials", $token, $expiry->getTimestamp(), "/");
         header("Location: /dashboard.php");
         exit;
       }

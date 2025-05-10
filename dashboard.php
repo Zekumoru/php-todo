@@ -21,11 +21,11 @@
     <?php
     require "models/User.php";
 
-    $user = User::fromJSON($_COOKIE["credentials"]);
+    // $user = User::fromJSON($_COOKIE["credentials"]);
     ?>
 
     <main>
-      <div class="wrapper">Welcome, <span class="capitalize"><?= $user->name ?></span>!</div>
+      <div class="wrapper">Welcome, <span class="capitalize">user</span>!</div>
     </main>
   </div>
 </body>
