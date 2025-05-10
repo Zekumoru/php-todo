@@ -30,6 +30,17 @@ try {
       FOREIGN KEY (user_id) REFERENCES users(id)
     )
   ");
+
+  $conn->exec("
+    CREATE TABLE IF NOT EXISTS todos (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      user_id INT NOT NULL,
+      text VARCHAR(255) NOT NULL,
+      checked BOOLEAN DEFAULT FALSE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )
+  ");
 } catch (PDOException $e) {
   echo $e->getMessage();
 }
