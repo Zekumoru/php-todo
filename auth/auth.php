@@ -18,7 +18,8 @@ if ($hasCredentials) {
   $user = $userRepository->findById($cookie->user_id);
 }
 
-if ($isAuth && $currentPage !== 'dashboard.php') {
+$isActionPage = str_starts_with($_SERVER['SCRIPT_NAME'], '/actions/');
+if ($isAuth && $currentPage !== 'dashboard.php' && !$isActionPage) {
   header("Location: /dashboard.php");
   exit;
 }

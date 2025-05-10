@@ -56,25 +56,12 @@
 
     $todoRepository = new TodoRepository($conn);
     $todos = $todoRepository->findAllByUserId($user->id);
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-      $input = trim($_POST["input"]);
-      if (!empty($input)) {
-        $todo = new CreateTodoDTO($user->id, $input);
-        $todoRepository->insertOne($todo);
-
-        // Redirect to prevent form resubmission
-        header("Location: " . $_SERVER['REQUEST_URI']);
-        exit;
-      }
-    }
     ?>
 
     <main>
       <div class="wrapper text-xl">Welcome, <span class="capitalize"><?= $user->name ?></span>!</div>
 
-      <form method="post" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+      <form method="post" action="/actions/add_todo.php">
         <div class="form-control">
           <input class="input" name="input" type="text" placeholder="What are you up to today?" />
           <button class="btn btn-primary add-button text-xl">+</button>
